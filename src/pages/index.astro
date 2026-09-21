@@ -8,7 +8,10 @@ const sortedProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data
 
 <Layout title="Projects | Mechatronics Portfolio">
     <section class="py-12">
-        <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Mechatronics Engineering Portfolio</h1>
+        <div class="flex justify-between items-start mb-6">
+            <h1 class="text-4xl font-extrabold text-gray-900">Mechatronics Engineering Portfolio</h1>
+            <button id="open-add-project" class="admin-only bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 font-bold shadow-sm whitespace-nowrap">+ Add Project</button>
+        </div>
         <p class="text-xl text-gray-600 mb-12 max-w-2xl">
             A showcase of my academic and personal projects in robotics, control systems, and electronics, preparing for a Master's degree.
         </p>
@@ -42,4 +45,94 @@ const sortedProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data
             ))}
         </div>
     </section>
+
+    <!-- Admin Add Project Modal -->
+    <div id="add-project-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 font-bold text-xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-6">Add New Project</h2>
+            <form id="project-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Project Title</label>
+                    <input type="text" id="p-title" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="E.g., Autonomous Robot">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Short Description</label>
+                    <input type="text" id="p-desc" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="A brief summary">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Date</label>
+                    <input type="date" id="p-date" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Skills (comma separated)</label>
+                    <input type="text" id="p-skills" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="C++, ROS, CAD">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Documentation (Markdown)</label>
+                    <textarea id="p-body" required rows="8" class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="## Documentation&#10;Write here..."></textarea>
+                </div>
+                <button type="submit" id="submit-btn" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 font-bold">Publish Project</button>
+                <div id="status-msg" class="text-center font-bold text-sm mt-2 hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const REPO = 'ars00y28/portfolio';
+        const modal = document.getElementById('add-project-modal');
+        const openBtn = document.getElementById('open-add-project');
+        const closeBtn = document.getElementById('close-modal-btn');
+        const projectForm = document.getElementById('project-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const statusMsg = document.getElementById('status-msg');
+
+        if(openBtn) openBtn.addEventListener('click', () => { modal.style.display = 'flex'; document.getElementById('p-date').valueAsDate = new Date(); });
+        if(closeBtn) closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+
+        if(projectForm) projectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const token = localStorage.getItem('gh_token');
+            if (!token) return alert('No GitHub token found! Please login via the Admin Dashboard.');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Publishing...";
+            statusMsg.classList.add('hidden');
+
+            const title = document.getElementById('p-title').value;
+            const desc = document.getElementById('p-desc').value;
+            const date = document.getElementById('p-date').value;
+            const skillsRaw = document.getElementById('p-skills').value;
+            const body = document.getElementById('p-body').value;
+
+            const skillsStr = skillsRaw.split(',').map(s => `"${s.trim()}"`).join(', ');
+            const markdown = `---\ntitle: "${title.replace(/"/g, '\\"')}"\ndescription: "${desc.replace(/"/g, '\\"')}"\ndate: ${date}\nskills: [${skillsStr}]\n---\n${body}`;
+            const filename = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.md';
+            const path = `src/content/projects/${filename}`;
+
+            try {
+                const encodedContent = btoa(unescape(encodeURIComponent(markdown)));
+                const response = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: `Add project: ${title}`, content: encodedContent })
+                });
+
+                if (response.ok) {
+                    statusMsg.textContent = "✅ Published! Live in 60s.";
+                    statusMsg.className = "text-center font-bold text-sm mt-2 text-green-600 block";
+                    setTimeout(() => { modal.style.display = 'none'; projectForm.reset(); }, 2000);
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || "Failed to publish");
+                }
+            } catch (err) {
+                statusMsg.textContent = "❌ Error: " + err.message;
+                statusMsg.className = "text-center font-bold text-sm mt-2 text-red-600 block";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Publish Project";
+            }
+        });
+    </script>
 </Layout>

@@ -44,15 +44,19 @@ const { title } = Astro.props;
             <p>&copy; {new Date().getFullYear()} Mechatronics Portfolio. Built for Master's Applications.</p>
         </footer>
 
+        <style is:global>
+            /* Hide admin elements by default */
+            .admin-only { display: none !important; }
+            /* Show them when body has is-admin class */
+            body.is-admin .admin-only { display: block !important; }
+            body.is-admin .admin-only-flex { display: flex !important; }
+            body.is-admin .admin-only-inline { display: inline-block !important; }
+        </style>
+
         <script>
-            if (window.netlifyIdentity) {
-                window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                    document.location.href = "/admin/";
-                    });
-                }
-                });
+            // Check for GitHub token in localStorage
+            if (localStorage.getItem('gh_token')) {
+                document.body.classList.add('is-admin');
             }
         </script>
 	</body>

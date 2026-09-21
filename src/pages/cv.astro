@@ -91,10 +91,103 @@ const sortedSkills = Array.from(allSkills).sort();
             </ul>
         </section>
         
-        <div class="text-center mt-12 print:hidden">
+        <div class="text-center mt-12 print:hidden flex justify-center gap-4">
             <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer" onclick="window.print()">
                 Print / Save as PDF
             </button>
+            <button id="open-edit-cv" class="admin-only bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer">
+                Edit CV
+            </button>
         </div>
     </div>
+
+    <!-- Admin Edit CV Modal -->
+    <div id="edit-cv-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button id="close-cv-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 font-bold text-xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-2">Edit CV Configuration</h2>
+            <p class="text-sm text-gray-600 mb-6">Modify the JSON below to update your CV. Be careful with formatting!</p>
+            <form id="cv-form" class="space-y-4">
+                <textarea id="cv-json" required rows="20" class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm whitespace-pre"></textarea>
+                
+                <button type="submit" id="cv-submit-btn" class="w-full bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 font-bold">Save CV Updates</button>
+                <div id="cv-status-msg" class="text-center font-bold text-sm mt-2 hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const REPO = 'ars00y28/portfolio';
+        const cvModal = document.getElementById('edit-cv-modal');
+        const cvOpenBtn = document.getElementById('open-edit-cv');
+        const cvCloseBtn = document.getElementById('close-cv-btn');
+        const cvForm = document.getElementById('cv-form');
+        const cvSubmitBtn = document.getElementById('cv-submit-btn');
+        const cvStatusMsg = document.getElementById('cv-status-msg');
+        const cvJsonArea = document.getElementById('cv-json');
+
+        let currentSha = null;
+
+        if(cvOpenBtn) cvOpenBtn.addEventListener('click', async () => { 
+            cvModal.style.display = 'flex'; 
+            cvJsonArea.value = "Loading current CV data from GitHub...";
+            try {
+                const res = await fetch(`https://api.github.com/repos/${REPO}/contents/src/data/cv.json`);
+                const data = await res.json();
+                currentSha = data.sha;
+                // GitHub content is base64 encoded
+                cvJsonArea.value = decodeURIComponent(escape(atob(data.content)));
+            } catch(err) {
+                cvJsonArea.value = "Failed to load CV data. Please try again.";
+            }
+        });
+        
+        if(cvCloseBtn) cvCloseBtn.addEventListener('click', () => { cvModal.style.display = 'none'; });
+
+        if(cvForm) cvForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const token = localStorage.getItem('gh_token');
+            if (!token) return alert('No GitHub token found! Please login via the Admin Dashboard.');
+            if (!currentSha) return alert('Failed to get file SHA. Please close and reopen the modal.');
+
+            try {
+                // Verify it's valid JSON
+                JSON.parse(cvJsonArea.value);
+            } catch(err) {
+                return alert("Invalid JSON! Please fix formatting errors before saving.\n\n" + err.message);
+            }
+
+            cvSubmitBtn.disabled = true;
+            cvSubmitBtn.textContent = "Saving...";
+            cvStatusMsg.classList.add('hidden');
+
+            try {
+                const encodedContent = btoa(unescape(encodeURIComponent(cvJsonArea.value)));
+                const response = await fetch(`https://api.github.com/repos/${REPO}/contents/src/data/cv.json`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: `Update CV via Admin`, 
+                        content: encodedContent,
+                        sha: currentSha 
+                    })
+                });
+
+                if (response.ok) {
+                    cvStatusMsg.textContent = "✅ CV Updated! Live in 60s.";
+                    cvStatusMsg.className = "text-center font-bold text-sm mt-2 text-green-600 block";
+                    setTimeout(() => { cvModal.style.display = 'none'; window.location.reload(); }, 2000);
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || "Failed to publish");
+                }
+            } catch (err) {
+                cvStatusMsg.textContent = "❌ Error: " + err.message;
+                cvStatusMsg.className = "text-center font-bold text-sm mt-2 text-red-600 block";
+            } finally {
+                cvSubmitBtn.disabled = false;
+                cvSubmitBtn.textContent = "Save CV Updates";
+            }
+        });
+    </script>
 </Layout>
