@@ -1,0 +1,68 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to main)
+local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "projects"
+    label: "Mechatronics Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false}
+      - {label: "Skills", name: "skills", widget: "list"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "hobbies"
+    label: "Interests & Hobbies"
+    folder: "src/content/hobbies"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list"}
+      - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false}
+      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "cv"
+    label: "CV Configuration"
+    files:
+      - label: "CV Details"
+        name: "cv_details"
+        file: "src/data/cv.json"
+        fields:
+          - {label: "Full Name", name: "name", widget: "string"}
+          - {label: "Professional Title", name: "title", widget: "string"}
+          - {label: "Subtitle / Objective", name: "subtitle", widget: "string"}
+          - label: "Contact Info"
+            name: "contact"
+            widget: "object"
+            fields:
+              - {label: "Email", name: "email", widget: "string"}
+              - {label: "GitHub", name: "github", widget: "string"}
+              - {label: "LinkedIn", name: "linkedin", widget: "string"}
+          - label: "Education"
+            name: "education"
+            widget: "list"
+            fields:
+              - {label: "Degree", name: "degree", widget: "string"}
+              - {label: "Duration", name: "duration", widget: "string"}
+              - {label: "Institution", name: "institution", widget: "string"}
+          - label: "Experience"
+            name: "experience"
+            widget: "list"
+            fields:
+              - {label: "Role", name: "role", widget: "string"}
+              - {label: "Company", name: "company", widget: "string"}
+              - {label: "Duration", name: "duration", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}

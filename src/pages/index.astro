@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Projects | Mechatronics Portfolio">
+    <section class="py-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Mechatronics Engineering Portfolio</h1>
+        <p class="text-xl text-gray-600 mb-12 max-w-2xl">
+            A showcase of my academic and personal projects in robotics, control systems, and electronics, preparing for a Master's degree.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {sortedProjects.map(project => (
+                <a href={`/projects/${project.id}`} class="block group">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="h-48 bg-gray-200 w-full overflow-hidden">
+                            {project.data.image ? (
+                                <img src={project.data.image} alt={project.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            ) : (
+                                <div class="w-full h-full flex items-center justify-center text-gray-400">No Image provided</div>
+                            )}
+                        </div>
+                        <div class="p-6">
+                            <h2 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{project.data.title}</h2>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">{project.data.description}</p>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                {project.data.skills.slice(0, 3).map(skill => (
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-md">{skill}</span>
+                                ))}
+                                {project.data.skills.length > 3 && (
+                                    <span class="px-2 py-1 bg-gray-50 text-gray-600 text-xs font-medium rounded-md">+{project.data.skills.length - 3}</span>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+</Layout>

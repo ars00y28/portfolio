@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Mechatronics Engineering Portfolio" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+	</head>
+	<body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+        <header class="bg-white shadow-sm sticky top-0 z-10">
+            <nav class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+                <a href="/" class="font-bold text-xl tracking-tight text-blue-900">Mechatronics Portfolio</a>
+                <div class="flex gap-6 font-medium text-gray-600">
+                    <a href="/" class="hover:text-blue-600 transition-colors">Projects</a>
+                    <a href="/hobbies" class="hover:text-blue-600 transition-colors">Interests</a>
+                    <a href="/cv" class="hover:text-blue-600 transition-colors">CV</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-grow w-full max-w-5xl mx-auto px-4 py-8">
+		    <slot />
+        </main>
+
+        <footer class="bg-gray-900 text-gray-400 py-8 text-center mt-auto text-sm">
+            <p>&copy; {new Date().getFullYear()} Mechatronics Portfolio. Built for Master's Applications.</p>
+        </footer>
+
+        <script>
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                    document.location.href = "/admin/";
+                    });
+                }
+                });
+            }
+        </script>
+	</body>
+</html>

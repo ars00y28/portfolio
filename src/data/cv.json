@@ -1,0 +1,30 @@
+{
+  "name": "Jane Doe",
+  "title": "BEng Mechatronics Engineering Student",
+  "subtitle": "Targeting M.Sc. Programs in Robotics & Mechatronics",
+  "contact": {
+    "email": "jane.doe@example.com",
+    "github": "github.com/janedoe",
+    "linkedin": "linkedin.com/in/janedoe"
+  },
+  "education": [
+    {
+      "degree": "Bachelor of Engineering in Mechatronics",
+      "duration": "2022 - 2026",
+      "institution": "University of Technology"
+    },
+    {
+      "degree": "High School Diploma (Science & Mathematics)",
+      "duration": "2018 - 2022",
+      "institution": "Springfield High School"
+    }
+  ],
+  "experience": [
+    {
+      "role": "Robotics Research Intern",
+      "company": "Advanced Robotics Lab",
+      "duration": "Summer 2024",
+      "description": "Developed SLAM algorithms for autonomous drones."
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import cvData from '../data/cv.json';
+
+// Dynamically extract skills from all Mechatronics projects
+const allProjects = await getCollection('projects');
+const allSkills = new Set<string>();
+
+allProjects.forEach(project => {
+    project.data.skills.forEach(skill => {
+        allSkills.add(skill);
+    });
+});
+
+const sortedSkills = Array.from(allSkills).sort();
+---
+
+<Layout title="Curriculum Vitae | Mechatronics Portfolio">
+    <div class="py-12 max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-sm border border-gray-100 mt-8">
+        <header class="border-b border-gray-200 pb-8 mb-8 flex flex-col md:flex-row justify-between md:items-end gap-4">
+            <div>
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-2">{cvData.name}</h1>
+                <h2 class="text-xl text-blue-600 font-medium">{cvData.title}</h2>
+                <p class="text-gray-500 mt-2">{cvData.subtitle}</p>
+            </div>
+            <div class="text-left md:text-right text-sm text-gray-500 flex flex-col gap-1">
+                {cvData.contact.email && <p>Email: {cvData.contact.email}</p>}
+                {cvData.contact.github && <p>GitHub: {cvData.contact.github}</p>}
+                {cvData.contact.linkedin && <p>LinkedIn: {cvData.contact.linkedin}</p>}
+            </div>
+        </header>
+
+        <section class="mb-10">
+            <h3 class="text-2xl font-bold text-gray-900 border-b-2 border-gray-100 pb-2 mb-4">Education</h3>
+            {cvData.education.map(edu => (
+                <div class="mb-4">
+                    <div class="flex justify-between font-bold text-gray-800">
+                        <span>{edu.degree}</span>
+                        <span>{edu.duration}</span>
+                    </div>
+                    <div class="text-gray-600 italic">{edu.institution}</div>
+                </div>
+            ))}
+        </section>
+
+        {cvData.experience && cvData.experience.length > 0 && (
+            <section class="mb-10">
+                <h3 class="text-2xl font-bold text-gray-900 border-b-2 border-gray-100 pb-2 mb-4">Experience</h3>
+                {cvData.experience.map(exp => (
+                    <div class="mb-4">
+                        <div class="flex justify-between font-bold text-gray-800">
+                            <span>{exp.role}</span>
+                            <span>{exp.duration}</span>
+                        </div>
+                        <div class="text-gray-600 italic mb-1">{exp.company}</div>
+                        <p class="text-gray-700 text-sm">{exp.description}</p>
+                    </div>
+                ))}
+            </section>
+        )}
+
+        <section class="mb-10">
+            <h3 class="text-2xl font-bold text-gray-900 border-b-2 border-gray-100 pb-2 mb-4">Technical Skills (Auto-Generated)</h3>
+            <p class="text-sm text-gray-500 mb-4 italic">Note: These skills are automatically aggregated from the skills tags on your Mechatronics project pages.</p>
+            <div class="flex flex-wrap gap-2">
+                {sortedSkills.length > 0 ? (
+                    sortedSkills.map(skill => (
+                        <span class="px-3 py-1.5 bg-gray-100 text-gray-800 font-medium text-sm rounded-md border border-gray-200">
+                            {skill}
+                        </span>
+                    ))
+                ) : (
+                    <p class="text-gray-500">Add some projects to automatically populate your skills!</p>
+                )}
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h3 class="text-2xl font-bold text-gray-900 border-b-2 border-gray-100 pb-2 mb-4">Key Projects</h3>
+            <ul class="space-y-4">
+                {allProjects.map(project => (
+                    <li>
+                        <div class="flex justify-between font-bold text-gray-800">
+                            <span>{project.data.title}</span>
+                            <span>{project.data.date.getFullYear()}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mt-1">{project.data.description}</p>
+                    </li>
+                ))}
+            </ul>
+        </section>
+        
+        <div class="text-center mt-12 print:hidden">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer" onclick="window.print()">
+                Print / Save as PDF
+            </button>
+        </div>
+    </div>
+</Layout>
