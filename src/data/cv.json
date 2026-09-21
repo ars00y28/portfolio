@@ -1,30 +1,23 @@
 {
-  "name": "Jane Doe",
+  "name": "Aditya Raj Sharma",
   "title": "BEng Mechatronics Engineering Student",
-  "subtitle": "Targeting M.Sc. Programs in Robotics & Mechatronics",
+  "subtitle": "Merging the worlds of machines and psychology.",
   "contact": {
-    "email": "jane.doe@example.com",
-    "github": "github.com/janedoe",
-    "linkedin": "linkedin.com/in/janedoe"
+    "email": "adityarsharma114@gmail.com",
+    "github": "github.com/ars00y28",
+    "linkedin": "www.linkedin.com/in/aditya-sharma-363700371"
   },
   "education": [
     {
       "degree": "Bachelor of Engineering in Mechatronics",
-      "duration": "2022 - 2026",
-      "institution": "University of Technology"
+      "duration": "2025-",
+      "institution": "University of Southern Denmark"
     },
     {
-      "degree": "High School Diploma (Science & Mathematics)",
-      "duration": "2018 - 2022",
-      "institution": "Springfield High School"
+      "degree": "A-levels (Physics, Computer Science, Mathematics)",
+      "duration": "2022-2024",
+      "institution": "Kaasthamandap Vidyalaya"
     }
   ],
-  "experience": [
-    {
-      "role": "Robotics Research Intern",
-      "company": "Advanced Robotics Lab",
-      "duration": "Summer 2024",
-      "description": "Developed SLAM algorithms for autonomous drones."
-    }
-  ]
+
 }
