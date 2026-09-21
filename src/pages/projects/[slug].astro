@@ -1,16 +1,22 @@
 ---
-import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import { marked } from 'marked';
 
 export async function getStaticPaths() {
-  const projectEntries = await getCollection('projects');
-  return projectEntries.map(entry => ({
-    params: { slug: entry.id }, props: { entry },
-  }));
+    const projects = await getCollection('projects');
+    return projects.map(entry => ({
+        params: { slug: entry.id },
+        props: { entry },
+    }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+const bomHtml = entry.data.bom ? marked.parse(entry.data.bom) : null;
+const readmeHtml = entry.data.readme ? marked.parse(entry.data.readme) : null;
+const appendixHtml = entry.data.appendix ? marked.parse(entry.data.appendix) : null;
 ---
 
 <Layout title={`${entry.data.title} | Mechatronics Portfolio`}>
@@ -30,8 +36,30 @@ const { Content } = await render(entry);
             <img src={entry.data.image} alt={entry.data.title} class="w-full h-auto rounded-xl shadow-md mb-12" />
         )}
 
-        <div class="prose prose-blue prose-lg max-w-none prose-headings:font-bold prose-a:text-blue-600">
+        <article class="prose prose-lg max-w-none prose-blue">
+            <h2 class="text-3xl font-bold border-b pb-2 mb-6 text-gray-900 mt-12">Project Report</h2>
             <Content />
-        </div>
+
+            {entry.data.bom && (
+                <div class="mt-12 bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <h2 class="text-2xl font-bold border-b border-gray-300 pb-2 mb-6 text-gray-900 !mt-0">Bill of Materials (BOM)</h2>
+                    <div class="prose-sm" set:html={bomHtml} />
+                </div>
+            )}
+
+            {entry.data.readme && (
+                <div class="mt-12 bg-slate-800 text-gray-200 p-6 rounded-xl shadow-inner">
+                    <h2 class="text-2xl font-bold border-b border-slate-700 pb-2 mb-6 text-white !mt-0">Setup Instructions (Readme)</h2>
+                    <div class="prose-sm prose-invert" set:html={readmeHtml} />
+                </div>
+            )}
+
+            {entry.data.appendix && (
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold border-b pb-2 mb-6 text-gray-900">Appendix / Extra Resources</h2>
+                    <div class="prose-sm" set:html={appendixHtml} />
+                </div>
+            )}
+        </article>
     </article>
 </Layout>

@@ -1,19 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import homeData from '../data/home.json';
 
-const allProjects = await getCollection('projects');
-const sortedProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const projects = await getCollection('projects');
+// Sort by date descending
+const sortedProjects = projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Layout title="Projects | Mechatronics Portfolio">
     <section class="py-12">
         <div class="flex justify-between items-start mb-6">
-            <h1 class="text-4xl font-extrabold text-gray-900">Mechatronics Engineering Portfolio</h1>
+            <h1 class="text-4xl font-extrabold text-gray-900">{homeData.title}</h1>
             <button id="open-add-project" class="admin-only bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 font-bold shadow-sm whitespace-nowrap">+ Add Project</button>
         </div>
         <p class="text-xl text-gray-600 mb-12 max-w-2xl">
-            A showcase of my academic and personal projects in robotics, control systems, and electronics, preparing for a Master's degree.
+            {homeData.subtitle}
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

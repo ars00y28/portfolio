@@ -13,12 +13,40 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Short Description", name: "description", widget: "text"}
       - {label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false}
-      - {label: "Skills", name: "skills", widget: "list"}
-      - {label: "Featured Image", name: "image", widget: "image", required: false}
-      - {label: "Featured", name: "featured", widget: "boolean", default: false}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Thumbnail Image", name: "image", widget: "image", required: false}
+      - {label: "Skills / Technologies", name: "skills", widget: "list"}
+      
+      - label: "Project Report / Main Content"
+        name: "body"
+        widget: "markdown"
+        
+      - label: "Bill of Materials (BOM)"
+        name: "bom"
+        widget: "markdown"
+        required: false
+        
+      - label: "Appendix / Extra Resources"
+        name: "appendix"
+        widget: "markdown"
+        required: false
+        
+      - label: "Readme / Setup Instructions"
+        name: "readme"
+        widget: "markdown"
+        required: false
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Home Page Text"
+        name: "home_details"
+        file: "src/data/home.json"
+        format: "json"
+        fields:
+          - {label: "Main Title", name: "title", widget: "string"}
+          - {label: "Subtitle / Description", name: "subtitle", widget: "text"}
 
   - name: "hobbies"
     label: "Interests & Hobbies"

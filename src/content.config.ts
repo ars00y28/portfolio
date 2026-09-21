@@ -10,6 +10,9 @@ const projectsCollection = defineCollection({
     skills: z.array(z.string()).default([]),
     image: z.string().optional(),
     featured: z.boolean().default(false),
+    bom: z.string().optional(),
+    appendix: z.string().optional(),
+    readme: z.string().optional(),
   }),
 });
 
