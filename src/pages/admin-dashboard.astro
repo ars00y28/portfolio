@@ -1,0 +1,159 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Admin Dashboard">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-100 mt-8" id="admin-container">
+        
+        <!-- Login Screen -->
+        <div id="login-screen" class="text-center py-10">
+            <h1 class="text-3xl font-bold mb-4 text-gray-900">Admin Login</h1>
+            <p class="text-gray-600 mb-6">Enter your GitHub Personal Access Token to edit your portfolio.</p>
+            <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" class="w-full max-w-md px-4 py-2 border rounded-md mb-4 outline-none focus:ring-2 focus:ring-blue-500" />
+            <br/>
+            <button id="login-btn" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 font-bold">Login</button>
+            <p class="text-xs text-gray-400 mt-4"><a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank" class="underline hover:text-blue-500">Get a token here</a> (Check "repo" scope)</p>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="hidden">
+            <div class="flex justify-between items-center border-b pb-4 mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Add New Project</h1>
+                <button id="logout-btn" class="text-sm text-red-500 hover:underline">Logout</button>
+            </div>
+
+            <form id="project-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Project Title</label>
+                    <input type="text" id="p-title" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="E.g., Autonomous Robot">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Short Description</label>
+                    <input type="text" id="p-desc" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="A brief 1-sentence summary">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Date</label>
+                    <input type="date" id="p-date" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Skills (comma separated)</label>
+                    <input type="text" id="p-skills" required class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500" placeholder="C++, ROS, CAD">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Documentation (Markdown)</label>
+                    <textarea id="p-body" required rows="10" class="w-full px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="## Documentation&#10;Write here..."></textarea>
+                </div>
+
+                <button type="submit" id="submit-btn" class="w-full bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 font-bold flex justify-center items-center">
+                    Publish Project
+                </button>
+                <div id="status-msg" class="text-center font-bold text-sm mt-2 hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const REPO = 'ars00y28/portfolio';
+        
+        const loginScreen = document.getElementById('login-screen');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+        const tokenInput = document.getElementById('gh-token');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const projectForm = document.getElementById('project-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const statusMsg = document.getElementById('status-msg');
+
+        // Check if logged in
+        if (localStorage.getItem('gh_token')) {
+            showDashboard();
+        }
+
+        loginBtn.addEventListener('click', () => {
+            const token = tokenInput.value.trim();
+            if (token) {
+                localStorage.setItem('gh_token', token);
+                showDashboard();
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('gh_token');
+            dashboardScreen.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+        });
+
+        function showDashboard() {
+            loginScreen.classList.add('hidden');
+            dashboardScreen.classList.remove('hidden');
+            document.getElementById('p-date').valueAsDate = new Date();
+        }
+
+        projectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const token = localStorage.getItem('gh_token');
+            if (!token) return;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Publishing...";
+            statusMsg.classList.add('hidden');
+
+            const title = document.getElementById('p-title').value;
+            const desc = document.getElementById('p-desc').value;
+            const date = document.getElementById('p-date').value;
+            const skillsRaw = document.getElementById('p-skills').value;
+            const body = document.getElementById('p-body').value;
+
+            // Format skills as yaml array
+            const skillsStr = skillsRaw.split(',').map(s => `"${s.trim()}"`).join(', ');
+
+            const markdown = `---
+title: "${title.replace(/"/g, '\\"')}"
+description: "${desc.replace(/"/g, '\\"')}"
+date: ${date}
+skills: [${skillsStr}]
+---
+${body}`;
+
+            const filename = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.md';
+            const path = `src/content/projects/${filename}`;
+
+            try {
+                // Base64 encode the content properly handling UTF-8
+                const encodedContent = btoa(unescape(encodeURIComponent(markdown)));
+
+                const response = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `Add project: ${title}`,
+                        content: encodedContent
+                    })
+                });
+
+                if (response.ok) {
+                    statusMsg.textContent = "✅ Project Published Successfully! Netlify will update in 60s.";
+                    statusMsg.className = "text-center font-bold text-sm mt-2 text-green-600 block";
+                    projectForm.reset();
+                    document.getElementById('p-date').valueAsDate = new Date();
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || "Failed to publish");
+                }
+            } catch (err) {
+                statusMsg.textContent = "❌ Error: " + err.message;
+                statusMsg.className = "text-center font-bold text-sm mt-2 text-red-600 block";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Publish Project";
+            }
+        });
+    </script>
+</Layout>
