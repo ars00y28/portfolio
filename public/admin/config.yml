@@ -39,6 +39,7 @@ collections:
       - label: "CV Details"
         name: "cv_details"
         file: "src/data/cv.json"
+        format: "json"
         fields:
           - {label: "Full Name", name: "name", widget: "string"}
           - {label: "Professional Title", name: "title", widget: "string"}
