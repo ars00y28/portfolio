@@ -7,21 +7,24 @@
     "github": "github.com/ars00y28",
     "linkedin": "www.linkedin.com/in/aditya-sharma-363700371"
   },
+  "experience": [
+    {
+      "role": "Vice-President",
+      "company": "Kaasthamandap Science Club",
+      "duration": "2024-2025",
+      "description": "I was a vice president of the science club during my A-level studies in Kaasthamandap Vidyalaya. "
+    }
+  ],
   "education": [
     {
       "degree": "Bachelor of Engineering in Mechatronics",
-      "duration": "2025-",
-      "institution": "University of Southern Denmark"
+      "institution": "University of Southern Denmark",
+      "duration": "2025-"
     },
     {
       "degree": "A-levels (Physics, Computer Science, Mathematics)",
-      "duration": "2022-2024",
-      "institution": "Kaasthamandap Vidyalaya"
+      "institution": "Kaasthamandap Vidyalaya",
+      "duration": "2022-2024"
     }
-  ],
-"Experience": {
-   "Position": "Vice-President of Science Club",
-"Duration": "2023-2024",
-"Institution": "Kaasthamandap Vidyalaya"}
-
+  ]
 }
