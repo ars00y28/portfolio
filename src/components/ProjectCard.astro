@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  video?: string;
+  href: string;
+}
+
+const { title, description, image, video, href } = Astro.props;
+---
+
+<a href={href} class="project-card reveal-on-scroll group block bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+  <!-- Media Container -->
+  <div class="relative w-full aspect-video bg-slate-100 overflow-hidden flex items-center justify-center">
+    {video ? (
+      <video 
+        src={video} 
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+        muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()"
+      ></video>
+    ) : image ? (
+      <img 
+        src={image} 
+        alt={title} 
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+        loading="lazy" 
+      />
+    ) : (
+      <div class="text-slate-400 font-medium">No Media</div>
+    )}
+    
+    <!-- Hover Overlay -->
+    <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      <span class="bg-white/90 backdrop-blur-sm text-slate-900 font-bold px-4 py-2 rounded-full text-sm shadow-sm translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+        View Project
+      </span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="p-6">
+    <h3 class="text-xl font-extrabold text-slate-900 mb-2">{title}</h3>
+    <p class="text-slate-600 line-clamp-2 leading-relaxed">{description}</p>
+  </div>
+</a>

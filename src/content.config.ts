@@ -1,33 +1,38 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const projectsCollection = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.date(),
-    skills: z.array(z.string()).default([]),
-    image: z.string().optional(),
-    featured: z.boolean().default(false),
-    bom: z.string().optional(),
-    appendix: z.string().optional(),
-    readme: z.string().optional(),
-  }),
-});
-
-const hobbiesCollection = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/hobbies" }),
-  schema: z.object({
-    title: z.string(),
-    category: z.string(),
-    tags: z.array(z.string()).default([]),
-    date: z.date(),
-    image: z.string().optional(),
-  }),
+const projectSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  date: z.date(),
+  image: z.string().optional(),
+  video: z.string().optional(),
+  featured: z.boolean().default(false),
+  // Engineering specific fields
+  bom: z.string().optional(),
+  files: z.array(
+    z.object({
+      label: z.string(),
+      url: z.string()
+    })
+  ).optional()
 });
 
 export const collections = {
-  'projects': projectsCollection,
-  'hobbies': hobbiesCollection,
+  engineering: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/engineering" }),
+    schema: projectSchema
+  }),
+  cooking: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/cooking" }),
+    schema: projectSchema
+  }),
+  art: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/art" }),
+    schema: projectSchema
+  }),
+  writings: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/writings" }),
+    schema: projectSchema
+  })
 };

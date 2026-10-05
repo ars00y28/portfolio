@@ -3,23 +3,23 @@ import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
-const allProjects = await getCollection('engineering');
+const allProjects = await getCollection('writings');
 const sortedProjects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const featuredProjects = sortedProjects.filter(p => p.data.featured);
 const regularProjects = sortedProjects.filter(p => !p.data.featured);
 ---
 
-<Layout title="Engineering | Portfolio">
+<Layout title="Writings | Portfolio">
   <div class="mb-16">
-    <h1 class="text-5xl font-black text-slate-900 mb-6 tracking-tight animate-[fade-in-up_0.6s_ease-out]">Engineering Projects</h1>
+    <h1 class="text-5xl font-black text-slate-900 mb-6 tracking-tight animate-[fade-in-up_0.6s_ease-out]">Writings & Thoughts</h1>
     <p class="text-xl text-slate-600 max-w-3xl leading-relaxed animate-[fade-in-up_0.8s_ease-out]">
-      A collection of mechatronics, robotics, and software engineering projects.
+      Essays, articles, and reflections.
     </p>
   </div>
 
   {featuredProjects.length > 0 && (
     <section class="mb-20">
-      <h2 class="text-2xl font-bold text-slate-900 mb-8 border-b pb-4">Featured Work</h2>
+      <h2 class="text-2xl font-bold text-slate-900 mb-8 border-b pb-4">Featured Writings</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {featuredProjects.map(project => (
           <ProjectCard 
@@ -27,7 +27,7 @@ const regularProjects = sortedProjects.filter(p => !p.data.featured);
             description={project.data.description}
             image={project.data.image}
             video={project.data.video}
-            href={`/engineering/${project.id}`}
+            href={`/writings/${project.id}`}
           />
         ))}
       </div>
@@ -35,7 +35,7 @@ const regularProjects = sortedProjects.filter(p => !p.data.featured);
   )}
 
   <section>
-    <h2 class="text-2xl font-bold text-slate-900 mb-8 border-b pb-4">All Projects</h2>
+    <h2 class="text-2xl font-bold text-slate-900 mb-8 border-b pb-4">All Writings</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {regularProjects.map(project => (
         <ProjectCard 
@@ -43,7 +43,7 @@ const regularProjects = sortedProjects.filter(p => !p.data.featured);
           description={project.data.description}
           image={project.data.image}
           video={project.data.video}
-          href={`/engineering/${project.id}`}
+          href={`/writings/${project.id}`}
         />
       ))}
     </div>

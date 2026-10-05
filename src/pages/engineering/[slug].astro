@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+    const projects = await getCollection('engineering');
+    return projects.map(entry => ({
+        params: { slug: entry.id },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={`${entry.data.title} | Engineering`}>
+  <article class="max-w-4xl mx-auto reveal-on-scroll">
+    <header class="mb-12">
+      <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-4">{entry.data.title}</h1>
+      <p class="text-xl text-slate-500 mb-8">{entry.data.date.toDateString()}</p>
+      
+      {entry.data.video ? (
+        <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-lg bg-slate-900">
+          <video src={entry.data.video} controls class="w-full h-full object-cover"></video>
+        </div>
+      ) : entry.data.image ? (
+        <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-lg bg-slate-100">
+          <img src={entry.data.image} alt={entry.data.title} class="w-full h-full object-cover" />
+        </div>
+      ) : null}
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+      <!-- Main Content -->
+      <div class="lg:col-span-3 prose prose-lg prose-slate max-w-none">
+        <h2 class="text-2xl font-bold border-b pb-2 mb-6">Report</h2>
+        <Content />
+
+        {entry.data.bom && (
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold border-b pb-2 mb-6">Bill of Materials (BOM)</h2>
+            <div class="prose-sm bg-slate-50 p-6 rounded-xl border border-slate-200">
+              <Fragment set:html={entry.data.bom} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1 space-y-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+          <h3 class="font-bold text-slate-900 uppercase tracking-wider text-sm mb-4">Project Details</h3>
+          <p class="text-slate-600 text-sm mb-4">{entry.data.description}</p>
+        </div>
+
+        {entry.data.files && entry.data.files.length > 0 && (
+          <div class="bg-blue-50 p-6 rounded-xl shadow-sm border border-blue-100">
+            <h3 class="font-bold text-blue-900 uppercase tracking-wider text-sm mb-4">Downloads</h3>
+            <ul class="space-y-3">
+              {entry.data.files.map(file => (
+                <li>
+                  <a href={file.url} download class="flex items-center text-blue-700 hover:text-blue-900 text-sm font-medium transition-colors group">
+                    <svg class="w-5 h-5 mr-2 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    {file.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -1,36 +1,26 @@
 {
-  "name": "Aditya Raj Sharma",
-  "title": "BEng Mechatronics Engineering Student",
-  "subtitle": "Merging the worlds of machines and psychology.",
+  "name": "Aditya",
+  "title": "Mechatronics Engineer",
   "contact": {
-    "email": "adityarsharma114@gmail.com",
-    "github": "github.com/ars00y28",
-    "linkedin": "www.linkedin.com/in/aditya-sharma-363700371"
+    "email": "contact@example.com",
+    "phone": "+1 234 567 890",
+    "location": "City, Country"
   },
+  "summary": "Passionate Mechatronics Engineer with a focus on robotics, automation, and control systems. Dedicated to building innovative solutions combining mechanical, electrical, and software engineering.",
   "experience": [
     {
-      "role": "Vice-President",
-      "company": "Kaasthamandap Science Club",
-      "duration": "2024-2025",
-      "description": "I was a vice president of the science club during my A-level studies in Kaasthamandap Vidyalaya. "
-    },
-    {
-      "role": "Board Member ",
-      "company": "SDU Motorbike Club ",
-      "duration": "2026-",
-      "description": "I am a current board member of the SDU Motorbike Club. We design and produce motorcycles for the MotoStudent competition. "
+      "role": "Robotics Intern",
+      "company": "Tech Robotics",
+      "date": "May 2024 - Aug 2024",
+      "description": "Developed path planning algorithms for autonomous mobile robots. Improved navigation efficiency by 15%."
     }
   ],
   "education": [
     {
-      "degree": "Bachelor of Engineering in Mechatronics",
-      "institution": "University of Southern Denmark",
-      "duration": "2025-"
-    },
-    {
-      "degree": "A-levels (Physics, Computer Science, Mathematics)",
-      "institution": "Kaasthamandap Vidyalaya",
-      "duration": "2022-2024"
+      "degree": "B.Sc. in Mechatronics Engineering",
+      "institution": "University of Engineering",
+      "date": "2021 - 2025"
     }
-  ]
+  ],
+  "skills": ["C++", "Python", "ROS", "CAD", "Control Systems", "Embedded C"]
 }
