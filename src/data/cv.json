@@ -1,26 +1,37 @@
 {
-  "name": "Aditya",
+  "name": "Aditya Raj Sharma",
   "title": "Mechatronics Engineer",
   "contact": {
-    "email": "contact@example.com",
+    "email": "AdityaRSharma114@gmail.com",
     "phone": "+1 234 567 890",
     "location": "City, Country"
   },
-  "summary": "Passionate Mechatronics Engineer with a focus on robotics, automation, and control systems. Dedicated to building innovative solutions combining mechanical, electrical, and software engineering.",
+  "summary": "Passionate Mechatronics Engineer with an interest with blending human psyche with robots. Dedicated to building innovative solutions combining mechanical, electrical, and software engineering, & Psychology.",
   "experience": [
     {
-      "role": "Robotics Intern",
-      "company": "Tech Robotics",
-      "date": "May 2024 - Aug 2024",
-      "description": "Developed path planning algorithms for autonomous mobile robots. Improved navigation efficiency by 15%."
+      "role": "Vice-President",
+      "company": "Kaasthamandap Science Club",
+      "date": "May 2022 - Aug 2024",
+      "description": "Motivated students to pursue Science & Technology through projects. "
+    },
+    {
+      "role": "Board Member",
+      "company": "MotorBike Club SDU",
+      "date": "Sep 2026 - Now",
+      "description": "Electrical head of the team. Building Motorcycles for the MotoStudent competition "
     }
   ],
   "education": [
+        {
+      "degree": "A-levels in Physics, Computer Science, &Pure Mathematics",
+      "institution": "Kaasthamandap Vidyalaya ",
+      "date": "2022 - 2024"
+    },
     {
       "degree": "B.Sc. in Mechatronics Engineering",
-      "institution": "University of Engineering",
-      "date": "2021 - 2025"
+      "institution": "University of Southern Denmark",
+      "date": "2025 - Now"
     }
   ],
-  "skills": ["C++", "Python", "ROS", "CAD", "Control Systems", "Embedded C"]
+  "skills": ["C++", "Python", "JavaScript", "CAD", "Control Systems", "Embedded C", "ROS2", "PCB Design"]
 }
