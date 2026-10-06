@@ -17,7 +17,7 @@
     {
       "role": "Board Member",
       "company": "MotorBike Club SDU",
-      "date": "Sep 2026 - Now",
+      "date": "Sep 2026 - Present",
       "description": "Electrical head of the team. Building Motorcycles for the MotoStudent competition "
     }
   ],
@@ -30,8 +30,26 @@
     {
       "degree": "B.Sc. in Mechatronics Engineering",
       "institution": "University of Southern Denmark",
-      "date": "2025 - Now"
+      "date": "2025 - Present"
     }
   ],
-  "skills": ["C++", "Python", "JavaScript", "CAD", "Control Systems", "Embedded C", "ROS2", "PCB Design"]
+  "Language": [
+    { 
+      "Language": "Nepali",
+      "Fluency": "Native Language"
+    },
+        { 
+      "Language": "English",
+      "Fluency": "C1"
+    },
+        { 
+      "Language": "Hindi",
+      "Fluency": "Fluent"
+    },
+        { 
+      "Language": "Danish",
+      "Fluency": "A1"
+    }
+  ],
+  "skills": ["C++", "Python", "MATLAB", "JavaScript", "NX Siemens CAD", "Control Systems", "Embedded C", "ROS2", "PCB Design","Electronics"]
 }
