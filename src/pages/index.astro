@@ -15,35 +15,12 @@ import Layout from '../layouts/Layout.astro';
     <div id="brain-container" class="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center mt-12 transition-all duration-700 ease-in-out z-10">
       
       <!-- Left Hemisphere (Logic) -->
-      <div id="left-hemisphere" class="absolute right-1/2 w-1/2 h-full cursor-pointer group origin-right transition-all duration-500 z-20">
-        <svg viewBox="0 0 200 400" class="absolute right-2 top-0 w-[198px] h-full text-slate-800 group-hover:text-slate-600 transition-colors duration-300 drop-shadow-md group-hover:drop-shadow-xl" preserveAspectRatio="none">
-          <!-- Geometric/Logical styling -->
-          <path d="M 198 40 L 90 70 L 20 160 L 30 260 L 100 340 L 198 360" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="bevel" />
-          <path d="M 198 120 L 100 150 L 70 230 L 198 290" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="bevel" />
-          <path d="M 100 150 L 20 160" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="bevel" />
-          <path d="M 70 230 L 30 260" fill="none" stroke="currentColor" stroke-width="12" stroke-linejoin="bevel" />
-          <path d="M 130 80 L 130 140" fill="none" stroke="currentColor" stroke-width="10" stroke-linejoin="bevel" />
-        </svg>
-        <!-- Overlay Text -->
-        <div class="absolute inset-0 flex items-center justify-center -translate-x-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span class="bg-slate-800 text-white font-bold px-4 py-2 rounded-full text-sm shadow-lg transform -rotate-12">Logic & Systems</span>
-        </div>
-      </div>
+<div id="left-hemisphere" class="...">
+    <img src="/images/left-brain.svg" class="absolute right-2 top-0 w-[198px] h-full object-contain drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300" />
+    <!-- Overlay Text -->
 
       <!-- Right Hemisphere (Creative) -->
-      <div id="right-hemisphere" class="absolute left-1/2 w-1/2 h-full cursor-pointer group origin-left transition-all duration-500 z-20">
-        <svg viewBox="202 0 200 400" class="absolute left-2 top-0 w-[198px] h-full text-slate-800 group-hover:text-slate-600 transition-colors duration-300 drop-shadow-md group-hover:drop-shadow-xl" preserveAspectRatio="none">
-          <!-- Organic/Creative styling -->
-          <path d="M 202 40 C 290 40, 380 110, 380 200 C 380 290, 310 350, 202 360" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" />
-          <path d="M 202 120 C 270 120, 310 160, 290 230 C 280 270, 240 290, 202 290" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" />
-          <path d="M 290 230 C 320 230, 350 250, 360 270" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" />
-          <path d="M 260 120 C 280 80, 290 60, 320 60" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" />
-        </svg>
-        <!-- Overlay Text -->
-        <div class="absolute inset-0 flex items-center justify-center translate-x-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span class="bg-slate-800 text-white font-bold px-4 py-2 rounded-full text-sm shadow-lg transform rotate-12">Art & Creation</span>
-        </div>
-      </div>
+   <img src="/images/right-brain.svg" class="absolute left-2 top-0 w-[198px] h-full object-contain drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300" />
 
     </div>
 
