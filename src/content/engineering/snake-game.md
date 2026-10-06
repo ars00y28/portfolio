@@ -3,7 +3,7 @@ title: "Snake Game Clone"
 description: "A functional recreation of the retro Snake game."
 date: 2023-11-25
 featured: false
-image: "https://images.unsplash.com/photo-1526568929-7c4da9624be8?auto=format&fit=crop&q=80&w=800"
+image: "https://picsum.photos/seed/snake/800/450"
 github: "https://github.com/ars00y28/SnakeGame_"
 demo: "https://ars00y28.github.io/SnakeGame_"
 ---

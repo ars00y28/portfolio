@@ -3,8 +3,9 @@ title: "Monty Hall Problem Simulation"
 description: "A statistical simulation of the famous Monty Hall probability puzzle."
 date: 2023-10-01
 featured: false
-image: "https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?auto=format&fit=crop&q=80&w=800"
+image: "https://picsum.photos/seed/monty/800/450"
 github: "https://github.com/ars00y28/Monty-Hall-Problem-Simulation"
+demo: "https://ars00y28.github.io/Monty-Hall-Problem-Simulation"
 ---
 
 # Monty Hall Problem Simulation
