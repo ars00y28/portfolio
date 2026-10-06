@@ -9,13 +9,8 @@ const projectSchema = z.object({
   video: z.string().optional(),
   featured: z.boolean().default(false),
   // Engineering specific fields
-  bom: z.string().optional(),
-  files: z.array(
-    z.object({
-      label: z.string(),
-      url: z.string()
-    })
-  ).optional()
+  github: z.string().optional(),
+  demo: z.string().optional()
 });
 
 export const collections = {
