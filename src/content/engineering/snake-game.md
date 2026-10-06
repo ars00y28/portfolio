@@ -5,7 +5,6 @@ date: 2023-11-25
 featured: false
 image: "https://picsum.photos/seed/snake/800/450"
 github: "https://github.com/ars00y28/SnakeGame_"
-demo: "https://ars00y28.github.io/SnakeGame_"
 ---
 
 # Snake Game
