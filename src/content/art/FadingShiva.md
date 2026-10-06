@@ -1,8 +1,8 @@
 ---
-title: "Freedom"
-description: "A piece exploring the concept of freedom."
-date: 2026-10-06
-image: "/images/Freedom.jpg"
+title: "Fading Shiva"
+description: "The universe is ceasing to exist"
+date: 2023-07-30
+image: "/images/FadingShiva.jpg"
 ---
 
-The undertone is warm, highlighting the patience and warmth that is radiating from the Buddha. 
+Visualisation of the universe, ceasing and existing at the same time. 
