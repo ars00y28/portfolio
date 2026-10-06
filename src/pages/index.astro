@@ -16,19 +16,11 @@ import Layout from '../layouts/Layout.astro';
       <!-- Left Hemisphere (Logic) -->
       <div id="left-hemisphere" class="absolute right-1/2 w-1/2 h-full cursor-pointer group origin-right transition-all duration-500 z-20 overflow-hidden">
         <img src="/images/left-brain.svg" class="absolute left-0 top-0 w-[200%] max-w-none h-full object-contain object-left drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300" />
-        <!-- Overlay Text -->
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span class="bg-slate-800 text-white font-bold px-4 py-2 rounded-full text-sm shadow-lg transform -rotate-12">Logic & Systems</span>
-        </div>
       </div>
 
       <!-- Right Hemisphere (Creative) -->
       <div id="right-hemisphere" class="absolute left-1/2 w-1/2 h-full cursor-pointer group origin-left transition-all duration-500 z-20 overflow-hidden">
         <img src="/images/right-brain.svg" class="absolute right-0 top-0 w-[200%] max-w-none h-full object-contain object-right drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300" />
-        <!-- Overlay Text -->
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span class="bg-slate-800 text-white font-bold px-4 py-2 rounded-full text-sm shadow-lg transform rotate-12">Art & Creation</span>
-        </div>
       </div>
     </div>
 
@@ -36,9 +28,7 @@ import Layout from '../layouts/Layout.astro';
     <div id="nodes-container" class="absolute inset-0 pointer-events-none z-30 flex items-center justify-center">
       <!-- Left Nodes -->
       <a href="/engineering" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Engineering</a>
-      <a href="/engineering" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Software</a>
       <a href="/math" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Mathematics</a>
-      <a href="/cv" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Curriculum Vitae</a>
       
       <!-- Right Nodes -->
       <a href="/art" class="right-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Fine Art</a>
@@ -95,17 +85,15 @@ import Layout from '../layouts/Layout.astro';
     .state-left-active .left-node {
       opacity: 1 !important;
     }
-    .state-left-active .left-node:nth-child(1) { transform: translate(-22vw, -20vh) scale(1); }
-    .state-left-active .left-node:nth-child(2) { transform: translate(-32vw, -7vh) scale(1); }
-    .state-left-active .left-node:nth-child(3) { transform: translate(-32vw, 7vh) scale(1); }
-    .state-left-active .left-node:nth-child(4) { transform: translate(-22vw, 20vh) scale(1); }
+    .state-left-active .left-node:nth-child(1) { transform: translate(-30vw, -10vh) scale(1); }
+    .state-left-active .left-node:nth-child(2) { transform: translate(-30vw, 10vh) scale(1); }
 
     .state-right-active .right-node {
       opacity: 1 !important;
     }
-    .state-right-active .right-node:nth-child(5) { transform: translate(25vw, -15vh) scale(1); }
-    .state-right-active .right-node:nth-child(6) { transform: translate(35vw, 0px) scale(1); }
-    .state-right-active .right-node:nth-child(7) { transform: translate(25vw, 15vh) scale(1); }
+    .state-right-active .right-node:nth-child(3) { transform: translate(25vw, -15vh) scale(1); }
+    .state-right-active .right-node:nth-child(4) { transform: translate(35vw, 0px) scale(1); }
+    .state-right-active .right-node:nth-child(5) { transform: translate(25vw, 15vh) scale(1); }
   </style>
 
   <script>
