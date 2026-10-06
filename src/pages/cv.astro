@@ -74,16 +74,31 @@ import cv from '../data/cv.json';
       </section>
 
       <!-- Skills -->
-      <section>
+      <section class="mb-12">
         <h2 class="text-2xl font-bold text-slate-900 mb-6 tracking-tight">Skills & Technologies</h2>
         <div class="flex flex-wrap gap-3">
-          {cv.skills.map(skill => (
+          {cv.skills.map((skill: string) => (
             <span class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg font-medium text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors cursor-default">
               {skill}
             </span>
           ))}
         </div>
       </section>
+
+      <!-- Languages -->
+      {cv.Language && (
+        <section>
+          <h2 class="text-2xl font-bold text-slate-900 mb-6 tracking-tight">Languages</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {cv.Language.map((lang: any) => (
+              <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex justify-between items-center">
+                <span class="font-bold text-slate-800">{lang.Language}</span>
+                <span class="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">{lang.Fluency}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   </div>
 </Layout>
