@@ -1,7 +1,7 @@
 ---
 title: "Burning Buddha"
-description: "Radiating warmth to the world"
-date: 2023-08-24
+description: "A short summary of the artwork."
+date: 2026-10-06
 image: "/images/burning-buddha.jpg"
 ---
 
