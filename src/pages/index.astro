@@ -12,7 +12,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
     <!-- The Brain Container -->
-    <div id="brain-container" class="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center mt-12 transition-all duration-700 ease-in-out z-10">
+    <div id="brain-container" class="relative w-[390px] h-[390px] md:w-[520px] md:h-[520px] flex items-center justify-center mt-12 transition-all duration-700 ease-in-out z-10">
       <!-- Left Hemisphere (Logic) -->
       <div id="left-hemisphere" class="absolute right-1/2 w-1/2 h-full cursor-pointer group origin-right transition-all duration-500 z-20 overflow-hidden">
         <img src="/images/left-brain.svg" class="absolute left-0 top-0 w-[200%] max-w-none h-full object-contain object-left drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300" />
@@ -37,6 +37,7 @@ import Layout from '../layouts/Layout.astro';
       <!-- Left Nodes -->
       <a href="/engineering" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Engineering</a>
       <a href="/engineering" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Software</a>
+      <a href="/math" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Mathematics</a>
       <a href="/cv" class="left-node node-link opacity-0 absolute text-2xl md:text-3xl font-black text-slate-700 hover:text-slate-900 transition-colors pointer-events-auto drop-shadow-md">Curriculum Vitae</a>
       
       <!-- Right Nodes -->
@@ -94,16 +95,17 @@ import Layout from '../layouts/Layout.astro';
     .state-left-active .left-node {
       opacity: 1 !important;
     }
-    .state-left-active .left-node:nth-child(1) { transform: translate(-25vw, -15vh) scale(1); }
-    .state-left-active .left-node:nth-child(2) { transform: translate(-35vw, 0px) scale(1); }
-    .state-left-active .left-node:nth-child(3) { transform: translate(-25vw, 15vh) scale(1); }
+    .state-left-active .left-node:nth-child(1) { transform: translate(-22vw, -20vh) scale(1); }
+    .state-left-active .left-node:nth-child(2) { transform: translate(-32vw, -7vh) scale(1); }
+    .state-left-active .left-node:nth-child(3) { transform: translate(-32vw, 7vh) scale(1); }
+    .state-left-active .left-node:nth-child(4) { transform: translate(-22vw, 20vh) scale(1); }
 
     .state-right-active .right-node {
       opacity: 1 !important;
     }
-    .state-right-active .right-node:nth-child(4) { transform: translate(25vw, -15vh) scale(1); }
-    .state-right-active .right-node:nth-child(5) { transform: translate(35vw, 0px) scale(1); }
-    .state-right-active .right-node:nth-child(6) { transform: translate(25vw, 15vh) scale(1); }
+    .state-right-active .right-node:nth-child(5) { transform: translate(25vw, -15vh) scale(1); }
+    .state-right-active .right-node:nth-child(6) { transform: translate(35vw, 0px) scale(1); }
+    .state-right-active .right-node:nth-child(7) { transform: translate(25vw, 15vh) scale(1); }
   </style>
 
   <script>

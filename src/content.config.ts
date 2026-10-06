@@ -26,6 +26,10 @@ export const collections = {
     loader: glob({ pattern: "**/*.md", base: "./src/content/art" }),
     schema: projectSchema
   }),
+  math: defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/math" }),
+    schema: projectSchema
+  }),
   writings: defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/writings" }),
     schema: projectSchema
